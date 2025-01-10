@@ -18,7 +18,7 @@ import os
 from urllib.parse import urlparse
 
 # Load environment variables from the .env file
-load_dotenv(dotenv_path='../.env')
+load_dotenv(dotenv_path='./.env')
 app_port = os.getenv('APP_PORT')
 
 
@@ -66,33 +66,23 @@ def home():
 
 
 from datetime import time  # Import the time class
-
 @app.route('/test-db')
 def test_db():
     try:
         # Establish a database connection
-
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        # Execute a simple query to test the connection
-        cursor.execute("SELECT * FROM orders;")
-        result = cursor.fetchone()
-
-        # Serialize result to handle non-JSON serializable objects
-        if result:
-            serialized_result = tuple(str(value) if isinstance(value, time) else value for value in result)
-        else:
-            serialized_result = None
+        # Execute a lightweight query to test the connection
+        cursor.execute("SELECT 1;")
 
         # Close the cursor and connection
         cursor.close()
         conn.close()
 
-        return jsonify({'message': 'Database connected successfully', 'result': serialized_result})
+        return jsonify({'message': 'Database connected successfully flask'})
     except Exception as e:
         return jsonify({'error': 'Failed to connect to the database', 'details': str(e)}), 500
-
 
 
 
