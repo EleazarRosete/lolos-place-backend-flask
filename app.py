@@ -18,9 +18,9 @@ import os
 from urllib.parse import urlparse
 
 # Load environment variables from the .env file
-load_dotenv(dotenv_path='./.env')
+load_dotenv(dotenv_path='../.env')
 app_port = os.getenv('APP_PORT')
-
+print(app_port)
 
 app = Flask(__name__)
 CORS(app)
